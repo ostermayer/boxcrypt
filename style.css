@@ -4,7 +4,7 @@
   --text-soft: #b9c0ce;
   --line: rgb(255 255 255 / 0.1);
   --accent: #f0b35a;
-  --tested: #86dcb2;
+  --accent-ink: #231703;
   --glass: rgb(255 255 255 / 0.06);
   --glass-solid: #181f33;
   --gutter: clamp(16px, 4vw, 32px);
@@ -45,6 +45,16 @@ header {
   gap: 8px 24px;
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mark { width: 36px; height: 36px; }
+.mark-tile { fill: var(--accent); }
+.mark-door { fill: var(--accent-ink); }
+
 h1 {
   margin: 0;
   font-size: 1.75rem;
@@ -57,14 +67,6 @@ nav { display: flex; gap: 20px; }
 .summary {
   margin: 20px 0 16px;
   font-size: 1.1rem;
-}
-
-.warning {
-  margin: 0;
-  padding: 12px 16px;
-  border-left: 3px solid var(--accent);
-  border-radius: 0 10px 10px 0;
-  background: rgb(240 179 90 / 0.1);
 }
 
 section {
@@ -105,22 +107,6 @@ tbody th {
   padding-right: 16px;
   font-weight: 600;
 }
-
-thead th {
-  border-top: 0;
-  color: var(--text-soft);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.status td:last-child {
-  width: 8em;
-  color: var(--text-soft);
-  white-space: nowrap;
-}
-
-.status td.tested { color: var(--tested); }
-.status td.active { color: var(--accent); }
 
 ul {
   margin: 0;

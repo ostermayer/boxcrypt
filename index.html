@@ -13,7 +13,14 @@
 <body>
   <main>
     <header>
-      <h1>cryptbox</h1>
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+          <rect x="4" y="4" width="56" height="56" rx="16" class="mark-tile"/>
+          <path d="M20 50V30a12 12 0 0 1 24 0v20z" class="mark-door"/>
+          <circle cx="38" cy="37" r="2.6" class="mark-tile"/>
+        </svg>
+        <h1>cryptbox</h1>
+      </div>
       <nav aria-label="Project links">
         <a href="https://github.com/ostermayer/cryptbox/tree/base-system">Source</a>
         <a href="https://github.com/ostermayer/cryptbox/blob/base-system/doc/architecture.md">Design</a>
@@ -21,17 +28,14 @@
       </nav>
     </header>
 
-    <p class="summary">cryptbox is an operating system based on NixOS. It changes a standard PC into a storage device for passwords, keys and files. The device connects to your local network. It has no route to the internet.</p>
-
-    <p class="warning"><strong>Warning:</strong> This software is in early development. It has no security audit. Do not use it to store real secrets.</p>
+    <p class="summary">cryptbox is an operating system based on NixOS. It changes a standard computer into a storage device for passwords, keys and files. The device connects to your local network. It has no route to the internet.</p>
 
     <section aria-labelledby="specification">
       <h2 id="specification">Design specification</h2>
-      <p>This table gives the design. The status table shows which parts operate now.</p>
       <table>
         <tbody>
           <tr><th scope="row">Base system</th><td>NixOS 26.05</td></tr>
-          <tr><th scope="row">Hardware</th><td>x86-64 PC with UEFI and 4 GB of RAM or more</td></tr>
+          <tr><th scope="row">Hardware</th><td>x86-64 or ARM64 computer with UEFI and 4 GB of RAM or more</td></tr>
           <tr><th scope="row">TPM</th><td>TPM 2.0 is recommended. Without a TPM, the device cannot prove that its system has no changes.</td></tr>
           <tr><th scope="row">Network</th><td>Ethernet or Wi-Fi. The device accepts TCP port 443 from private addresses only. It ignores the DHCP gateway.</td></tr>
           <tr><th scope="row">System</th><td>Read-only. dm-verity checks each block when the device reads it.</td></tr>
@@ -41,28 +45,6 @@
           <tr><th scope="row">Files</th><td>No size limit. Available disk space is the only limit.</td></tr>
           <tr><th scope="row">Backup</th><td>Encrypted copies on a USB drive. You can restore a backup on different hardware.</td></tr>
           <tr><th scope="row">Interfaces</th><td>Web interface on the local network. Text interface on the screen of the device.</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section aria-labelledby="status">
-      <h2 id="status">Status</h2>
-      <table class="status">
-        <thead>
-          <tr><th scope="col">Part</th><th scope="col">State</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Hardened base system</td><td class="tested">Tested in VM</td></tr>
-          <tr><td>Firewall and no default route</td><td class="tested">Tested in VM</td></tr>
-          <tr><td>Read-only system with dm-verity</td><td class="tested">Tested in VM</td></tr>
-          <tr><td>Image assembly gives the same SHA-256 on two machines</td><td class="tested">Tested</td></tr>
-          <tr><td>Install program with mirrored drives</td><td class="active">In progress</td></tr>
-          <tr><td>Authentication of boot files</td><td>Not started</td></tr>
-          <tr><td>TPM tamper warning</td><td>Not started</td></tr>
-          <tr><td>Encrypted store</td><td>Not started</td></tr>
-          <tr><td>Web interface and text interface</td><td>Not started</td></tr>
-          <tr><td>Backup and restore</td><td>Not started</td></tr>
-          <tr><td>Independent security audit</td><td>Not started</td></tr>
         </tbody>
       </table>
     </section>
