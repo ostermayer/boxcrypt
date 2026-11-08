@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>cryptbox</title>
+  <meta name="description" content="A purpose-built operating system that turns an ordinary PC into a vault for your passwords, keys and files, with no route to the internet.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header class="hero" id="top">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="6" y="6" width="52" height="52" rx="15" class="mark-body"/>
+        <circle cx="32" cy="27" r="7.5" class="mark-key"/>
+        <path d="M28.5 32h7l2.5 14h-12z" class="mark-key"/>
+      </svg>
+      <p class="pill"><span class="pill-dot"></span>Early development. Not ready for real secrets yet.</p>
+      <h1>A computer that only keeps secrets.</h1>
+      <p class="lead">cryptbox is an operating system that turns an ordinary PC into a vault for your passwords, keys and files. It lives on your local network and has no route to the internet.</p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/ostermayer/cryptbox/tree/base-system">View on GitHub</a>
+        <a class="button" href="https://github.com/ostermayer/cryptbox/blob/base-system/doc/architecture.md">Read the design</a>
+      </div>
+    </header>
+
+    <section id="features" aria-labelledby="features-title">
+      <h2 id="features-title">What we're building</h2>
+      <div class="grid">
+        <article class="tile">
+          <h3>No way out</h3>
+          <p>The box takes an address on your network and nothing else. There is no route to the internet, and no setting that can open one.</p>
+        </article>
+        <article class="tile">
+          <h3>Locked by default</h3>
+          <p>Your secrets can only be read while you have it unlocked. Walk away or restart it, and it locks itself.</p>
+        </article>
+        <article class="tile">
+          <h3>Tells you if it changes</h3>
+          <p>The system is read-only and checked block by block. If someone alters it, you find out before you type your passphrase.</p>
+        </article>
+        <article class="tile">
+          <h3>Anything you need to keep</h3>
+          <p>Passwords, notes, keys and files of any size, in one encrypted store you reach from a browser on your network.</p>
+        </article>
+        <article class="tile">
+          <h3>Survives losing the box</h3>
+          <p>Drives mirror automatically, and encrypted backups restore onto a new machine. Copies are useless to anyone without your key.</p>
+        </article>
+        <article class="tile">
+          <h3>Readable in 30 years</h3>
+          <p>Every secret is a standard <a href="https://age-encryption.org">age</a> file with post-quantum keys. Your data doesn't depend on this project surviving.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="status" aria-labelledby="status-title">
+      <h2 id="status-title">Where it stands</h2>
+      <p class="section-lead">We would rather tell you exactly what exists than promise it. The code is public, and nothing here has been independently audited yet.</p>
+      <div class="columns">
+        <div class="panel">
+          <h3><span class="state state-done">Working in tests</span></h3>
+          <ul>
+            <li>Hardened, read-only system</li>
+            <li>Takes no route to the internet, tested on a simulated network</li>
+            <li>Altered system blocks are refused</li>
+            <li>Image builds match byte for byte across machines</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3><span class="state state-now">Building now</span></h3>
+          <ul>
+            <li>USB installer with mirrored drives</li>
+            <li>Tamper warning before you unlock</li>
+            <li>Encrypted store and passphrase unlock</li>
+            <li>Web and text interfaces</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3><span class="state state-later">Before 1.0, and after</span></h3>
+          <ul>
+            <li>Backups and restore</li>
+            <li>Independent security audit</li>
+            <li>Agents that can deposit secrets but not read them</li>
+            <li>Sync between boxes, and add-on apps</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Open source under the MIT licence. Runs on hardware you own.</p>
+    </footer>
+  </main>
+
+  <nav class="dock" aria-label="Page sections">
+    <a href="#top">Home</a>
+    <a href="#features">Features</a>
+    <a href="#status">Status</a>
+    <a href="https://github.com/ostermayer/cryptbox/tree/base-system">GitHub</a>
+  </nav>
+</body>
+</html>
