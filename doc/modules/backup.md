@@ -1,0 +1,58 @@
+# Backup
+
+> **Status: design.** See ADR-009.
+
+## Purpose
+
+Make losing the box an inconvenience instead of a disaster.
+
+## Recovery kit
+
+Created once during setup, and printed or saved by the owner. It holds the **recovery
+key**, which opens the keyring if the passphrase is forgotten. The wizard proves it
+works before setup finishes. Keep it apart from the box and the backup drives. Losing
+both the passphrase and the kit loses the data.
+
+## Backup
+
+A backup drive holds the same layout as the store. Backups run after changes and at
+least daily, whenever a drive labelled `CRYPTBOX-BAK` is attached.
+
+1. Copy every object the drive lacks, under a temporary name, then rename it.
+2. Copy new log entries and the wrapped keyrings.
+3. Copy add-on app data, encrypted to the content key.
+4. Verify what was copied against its hash.
+
+The operating system is not backed up, because the image supplies it. Everything on
+the drive is already encrypted, so a backup needs no key and runs while locked.
+
+## Verification
+
+| Check | When | Proves |
+|---|---|---|
+| Hash every new object | Every backup | New copies are intact |
+| Hash the whole drive | Monthly | Nothing has decayed |
+| Decrypt and verify logs | When unlocked, monthly | The backup opens with the current keys |
+| Recovery kit test | Prompted every 6 months | The kit still opens the keyring |
+
+## Second copy
+
+The console records when each backup drive was last seen, and prompts the owner if no
+second drive has appeared for 30 days.
+
+## Restore
+
+Offered on the first screen of a fresh install, behind the setup code. It copies the
+store back, checks every object against its hash and asks for the passphrase. Logs and
+keyring come back first, so secrets are usable before large files finish copying. The
+box resumes with the same address and certificate.
+
+## Edge cases
+
+- **Backup drive too small:** the box says so and shows the size needed.
+- **Drive removed mid-copy:** temporary files are ignored, and the next run resumes.
+- **New drive:** formatting requires explicit confirmation showing its model and size.
+- **Passphrase changed:** older backups keep the old wrapped keyring until the next
+  run, and the recovery key opens both.
+- **Tampered backup:** altered objects fail their hash, and forged log entries fail
+  their signatures.
