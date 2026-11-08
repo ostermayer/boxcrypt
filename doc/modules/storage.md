@@ -23,18 +23,21 @@ Each mirrored drive has:
 
 | Partition | Label | Purpose |
 |---|---|---|
-| 1 | `CB-ESP` | Boot files, 1 GiB, kept identical across drives |
-| 2 | `CB-ZFS` | Member of pool `cbpool` |
+| 1 | `CB-ESP` | Signed kernel images for both system slots, 1 GiB |
+| 2, 3 | `CB-SYS-A`, `CB-VER-A` | System slot A and its dm-verity hashes |
+| 4, 5 | `CB-SYS-B`, `CB-VER-B` | System slot B and its dm-verity hashes |
+| 6 | `CB-ZFS` | Member of pool `cbpool` |
+
+System slots are identical across drives and are never written while in use. An update
+writes to the inactive slot. See [integrity](integrity.md).
 
 | Dataset | Mount | Contents |
 |---|---|---|
-| `cbpool/nix` | `/nix` | System store |
 | `cbpool/persist` | `/persist` | Encrypted store and box configuration |
 | `cbpool/apps/<name>` | `/persist/apps/<name>` | One per enabled add-on app |
 
-Boot files are installed on the UEFI removable path, so any drive can boot without
-firmware entries. After each update, a service copies them to every boot partition it
-finds.
+Kernel images are installed on the UEFI removable path, so any drive can boot without
+firmware entries. Each update writes to every drive.
 
 ## Maintenance
 

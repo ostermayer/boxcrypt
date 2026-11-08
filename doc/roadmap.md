@@ -16,7 +16,13 @@ booted from a real disk or been tested on real hardware.
 - [ ] Tmpfs root and ZFS boot work from a real disk, proven with the installer in M2
 
 ### M2: It installs
+- [ ] Verified A/B system partitions with dm-verity, and `/persist` mounted noexec
+- [ ] Image rebuilt on two machines matches byte for byte
+- [ ] VM test proving a modified system block is refused
+- [ ] VM test proving nothing under `/persist` can widen the network rules
+- [ ] Exposed services run without `CAP_NET_ADMIN`
 - [ ] USB installer that discovers drives and builds the mirror
+- [ ] Installer warns when there is no TPM, and the owner must accept
 - [ ] Each drive boots alone, proven in a VM by removing drives
 - [ ] First install on real hardware
 - [ ] Lock kernel module loading once the needed drivers are known
@@ -29,6 +35,7 @@ booted from a real disk or been tested on real hardware.
 
 ### M4: A person can use it
 - [ ] First-run wizard with setup code
+- [ ] TPM-sealed check phrase on the unlock page, with a warning when boot has changed
 - [ ] Web UI in the design language
 - [ ] TUI on the box's screen, including joining a Wi-Fi network
 - [ ] Certificate install guide per device type
@@ -41,7 +48,9 @@ booted from a real disk or been tested on real hardware.
 ### M6: 1.0
 - [ ] Signed offline updates and rollback
 - [ ] Drive failure alerts and guided replacement
-- [ ] Reproducible builds and published signatures
+- [ ] Reproducible rebuilds as a release gate, with signatures and a public log
+- [ ] `cryptbox verify` from another computer
+- [ ] Secure Boot enrollment where the firmware allows it
 - [ ] **Independent security audit**
 
 ### M7: Add-on apps
@@ -91,6 +100,8 @@ Coinkite's product, so cryptbox will have its own signer.
 ## Known limitations
 
 - No secure element or tamper detection
+- A live kernel compromise cannot be ruled out by the box itself
+- Machines without a TPM cannot prove their state
 - One owner until tenants arrive
 - Requires x86-64 UEFI
 - Choosing Wi-Fi adds radio exposure and stores the network password unencrypted

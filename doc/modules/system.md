@@ -10,7 +10,8 @@ profile, so these settings are our own.
 
 ## Behaviour
 
-- Root is a tmpfs rebuilt at every boot, and `/nix` is read-only at runtime.
+- Root is a tmpfs rebuilt at every boot, and the OS is read-only and verified block by
+  block. See [integrity](integrity.md).
 - Only declared paths persist, bind-mounted from `/persist`.
 - No SSH, no login prompt, no sudo, no root password and no Nix daemon at runtime.
 - No swap, and core dumps are off, so keys cannot reach the disk.
@@ -22,13 +23,12 @@ profile, so these settings are our own.
 ## Updates
 
 A release is a signed file containing a complete system. The web UI accepts the
-upload, verifies the signature against a key built into the image, imports the system
-and activates it for the next boot. The previous generation stays available for
-rollback.
+upload, verifies the signature against a key built into the image and writes it to the
+inactive system slot on every drive. The previous slot stays available for rollback.
 
 ## Edge cases
 
-- **Update fails to boot:** the previous generation remains in the boot menu.
+- **Update fails to boot:** the box returns to the previous slot.
 - **Upload is corrupt or unsigned:** rejected before anything changes.
 - **Clock is wrong:** there is no internet time. The web UI compares the box's clock
   with the browser's and offers to correct it.

@@ -184,3 +184,26 @@ reachable on the LAN only. See [apps](modules/apps.md).
 
 **Consequences.** Installing is a click and needs no internet. Each app adds to image
 size and to the review burden of every release, which keeps the list short.
+
+## ADR-018: The no-internet guarantee is verified from build to boot
+
+**Context.** The box must not be able to reach the internet, and malware must not be
+able to change that without the owner knowing. A firewall alone is only as trustworthy
+as the system enforcing it.
+
+**Decision.** Build reproducible images, and sign and publicly log each release. Boot a
+single kernel image through Secure Boot where available, measured by the TPM. Verify the
+OS with dm-verity, keep network rules only in the verified image, and show the owner a
+TPM-sealed check phrase before each unlock. See [integrity](modules/integrity.md).
+
+**Consequences.** The OS moves off ZFS into verified A/B partitions, and ZFS holds only
+`/persist`. Persistent tampering either fails to boot or shows at the next unlock. A live
+kernel compromise cannot be ruled out by the box itself, so docs treat a router block as
+part of the design.
+
+A TPM is not required, so the box still runs on any commodity hardware. Without one, the
+installer explains that the machine cannot prove its state and asks the owner to accept
+that, and the status page keeps saying so.
+
+**Rejected.** A signed settings file with no hardware anchor, because malware could
+replace the file and the key that checks it together.

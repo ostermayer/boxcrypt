@@ -53,5 +53,7 @@ on the box's screen, which needs a monitor and keyboard once.
 
 ## Owner guidance
 
-Block the box's address from the internet at the router as well. A host firewall can
-be changed by anyone who gains root on the box. A router rule cannot.
+Block the box's address from the internet at the router as well. This is part of the
+design, not an extra. A live kernel compromise could change the box's own firewall until
+the next reboot, but nothing on the box can change a router rule. See
+[integrity](integrity.md).

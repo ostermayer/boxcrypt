@@ -10,6 +10,8 @@ with no route to the internet.
 ## Principles
 
 - **One job.** Keep secrets. Anything else belongs on another machine.
+- **Verified from build to boot.** The box cannot reach the internet, and nobody can
+  change that without the owner knowing (ADR-018).
 - **Locked by default.** Secrets are readable only while the owner has unlocked the
   box, and every reboot locks it.
 - **Readable in 30 years.** Every stored object is a stock age file, so the data
@@ -39,8 +41,8 @@ with no route to the internet.
    Backup drives, and later other boxes
 ```
 
-The system lives in a read-only Nix store. The root filesystem is a tmpfs rebuilt
-at every boot, so only declared paths under `/persist` survive.
+The system lives in read-only partitions verified block by block. The root filesystem
+is a tmpfs rebuilt at every boot, so only declared paths under `/persist` survive.
 
 ## Module map
 
@@ -49,6 +51,7 @@ at every boot, so only declared paths under `/persist` survive.
 | System | `modules/security.nix` | Hardened base, tmpfs root | [system](modules/system.md) |
 | Network | `modules/network.nix` | LAN-only networking, firewall | [network](modules/network.md) |
 | Storage | `modules/storage.nix` | ZFS mirror, boot redundancy | [storage](modules/storage.md) |
+| Integrity | `modules/integrity.nix` | Verified boot, proof for the owner | [integrity](modules/integrity.md) |
 | Core | `src/cryptboxd/` | Encrypted store, keys, API | [core](modules/core.md) |
 | Web UI | `src/cryptboxd/web/` | The local web interface | [web-ui](modules/web-ui.md) |
 | TUI | `src/cryptboxd/tui/` | The text interface | [tui](modules/tui.md) |
@@ -102,6 +105,9 @@ installs it as a new system generation, keeping the old one for rollback.
 | Someone hosting a mirror | Ciphertext only | Mirrors never receive keys |
 | Recorded ciphertext, future quantum computer | Stays encrypted | Hybrid post-quantum keys |
 | Tampered backup or mirror | Detected | Hash-named objects, signed logs |
+| Malware rewrites the OS or firewall on disk | Fails to boot, or shows at next unlock | Verified boot, TPM check phrase |
+| Malicious or altered release | Refused, or exposed by a rebuild | Signatures, public log, reproducible builds |
+| Live kernel compromise | Could change the rules until reboot | No network privileges for exposed programs, router block |
 | Compromised box while locked | Could capture the next unlock | Small surface, read-only system |
 | Compromised box while unlocked | Everything readable | Auto-lock, small surface |
 | Compromised add-on app | Limited to that app's own data | Isolation, no access to the store |
@@ -115,4 +121,5 @@ who modifies the box and waits for the owner to unlock it.
 ## Hardware
 
 x86-64, UEFI and 4 GB of RAM or more, with wired Ethernet or Wi-Fi. Wired is
-recommended, and Bluetooth is disabled. ARM boards are future work.
+recommended, and Bluetooth is disabled. A TPM 2.0 is strongly recommended, because
+without one the box cannot prove its state. ARM boards are future work.
