@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 522" font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#9aa4b8"/>
+    </marker>
+  </defs>
+
+  <g fill="#232b42" stroke="#3d4763">
+    <rect x="10" y="10" width="160" height="84" rx="14"/>
+    <rect x="190" y="10" width="160" height="84" rx="14"/>
+    <rect x="370" y="10" width="160" height="84" rx="14"/>
+  </g>
+  <g text-anchor="middle" fill="#eef0f5" font-size="20" font-weight="650">
+    <text x="90" y="46">Laptop</text>
+    <text x="270" y="46">Phone</text>
+    <text x="450" y="46">AI agent</text>
+  </g>
+  <g text-anchor="middle" fill="#b9c0ce" font-size="15">
+    <text x="90" y="74">Web browser</text>
+    <text x="270" y="74">Web browser</text>
+    <text x="450" y="74">Adds secrets only</text>
+  </g>
+
+  <g stroke="#9aa4b8" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)">
+    <line x1="90" y1="98" x2="90" y2="168"/>
+    <line x1="270" y1="98" x2="270" y2="168"/>
+  </g>
+  <line x1="450" y1="98" x2="450" y2="168" stroke="#9aa4b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <g text-anchor="middle" fill="#b9c0ce" font-size="15">
+    <text x="180" y="138">Local network</text>
+    <text x="360" y="138">https://boxcrypt.local</text>
+  </g>
+
+  <rect x="10" y="172" width="520" height="220" rx="18" fill="#2a2320" stroke="#ff7a1a" stroke-width="2"/>
+  <rect x="26" y="188" width="40" height="40" rx="11" fill="#ff7a1a"/>
+  <path d="M38 223V204a8 8 0 0 1 16 0v19z" fill="#1f1205"/>
+  <circle cx="50" cy="212" r="1.7" fill="#ff7a1a"/>
+  <text x="76" y="216" fill="#eef0f5" font-size="24" font-weight="700">BoxCrypt</text>
+  <text x="26" y="256" fill="#d6dae3" font-size="15">Locked until you enter your passphrase</text>
+
+  <g fill="#232b42" stroke="#3d4763">
+    <rect x="22" y="274" width="156" height="102" rx="12"/>
+    <rect x="190" y="274" width="156" height="102" rx="12"/>
+    <rect x="358" y="274" width="160" height="102" rx="12"/>
+  </g>
+  <g text-anchor="middle" fill="#eef0f5" font-size="18" font-weight="650">
+    <text x="100" y="318">Drive 1</text>
+    <text x="268" y="318">Drive 2</text>
+    <text x="438" y="318">Internal backup</text>
+  </g>
+  <g text-anchor="middle" fill="#b9c0ce" font-size="14">
+    <text x="100" y="346">Encrypted data</text>
+    <text x="268" y="346">Mirror of drive 1</text>
+    <text x="438" y="346">Older copies</text>
+  </g>
+
+  <line x1="135" y1="396" x2="135" y2="428" stroke="#9aa4b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="405" y1="396" x2="405" y2="432" stroke="#ff6b5e" stroke-width="2" stroke-dasharray="5 5"/>
+  <g stroke="#ff6b5e" stroke-width="3" stroke-linecap="round">
+    <line x1="396" y1="405" x2="414" y2="423"/>
+    <line x1="414" y1="405" x2="396" y2="423"/>
+  </g>
+
+  <rect x="10" y="432" width="250" height="80" rx="14" fill="#232b42" stroke="#3d4763"/>
+  <text x="135" y="465" text-anchor="middle" fill="#eef0f5" font-size="20" font-weight="650">USB backup</text>
+  <text x="135" y="492" text-anchor="middle" fill="#b9c0ce" font-size="15">Keep it in another place</text>
+
+  <rect x="280" y="432" width="250" height="80" rx="14" fill="#2e1f24" stroke="#ff6b5e"/>
+  <text x="405" y="465" text-anchor="middle" fill="#eef0f5" font-size="20" font-weight="650">Internet</text>
+  <text x="405" y="492" text-anchor="middle" fill="#f2c6c1" font-size="15">No route</text>
+</svg>

@@ -30,6 +30,14 @@
 
     <p class="summary">BoxCrypt is an operating system based on NixOS. It changes a standard computer into a storage device for passwords, keys and files. The device connects to your local network. It has no route to the internet.</p>
 
+    <section aria-labelledby="usage">
+      <h2 id="usage">How you use it</h2>
+      <figure>
+        <img src="how-it-works.svg" width="540" height="522" alt="A laptop, a phone and an AI agent connect to BoxCrypt on the local network with HTTPS. The agent can only add secrets. BoxCrypt stays locked until you enter your passphrase. It keeps encrypted data on two mirrored drives and older copies in an internal backup. A second backup goes to a USB drive that you keep in another place. BoxCrypt has no route to the internet.">
+        <figcaption>You install BoxCrypt on a computer one time from a USB stick. After installation, the device does not need a screen or a keyboard. You open https://boxcrypt.local in a browser on your local network.</figcaption>
+      </figure>
+    </section>
+
     <section aria-labelledby="specification">
       <h2 id="specification">Design specification</h2>
       <table>
@@ -37,14 +45,14 @@
           <tr><th scope="row">Base system</th><td>NixOS 26.05</td></tr>
           <tr><th scope="row">Hardware</th><td>x86-64 or ARM64 computer with UEFI and 4 GB of RAM or more</td></tr>
           <tr><th scope="row">TPM</th><td>TPM 2.0 is recommended. Without a TPM, the device cannot prove that its system has no changes.</td></tr>
-          <tr><th scope="row">Network</th><td>Ethernet or Wi-Fi. The device accepts TCP port 443 from private addresses only. It ignores the DHCP gateway.</td></tr>
+          <tr><th scope="row">Network</th><td>Ethernet or Wi-Fi. The device name is boxcrypt.local. The device accepts connections from private addresses only. It ignores the DHCP gateway.</td></tr>
           <tr><th scope="row">System</th><td>Read-only. dm-verity checks each block when the device reads it.</td></tr>
           <tr><th scope="row">Storage</th><td>ZFS mirror across all NVMe and SATA drives</td></tr>
           <tr><th scope="row">Encryption</th><td>Each secret is one age file with hybrid post-quantum keys. Standard age tools can decrypt the data.</td></tr>
           <tr><th scope="row">Keys</th><td>Keys stay in RAM while the device is unlocked. A restart locks the device.</td></tr>
           <tr><th scope="row">Files</th><td>No size limit. Available disk space is the only limit.</td></tr>
-          <tr><th scope="row">Backup</th><td>Encrypted copies on a USB drive. You can restore a backup on different hardware.</td></tr>
-          <tr><th scope="row">Interfaces</th><td>Web interface on the local network. Text interface on the screen of the device.</td></tr>
+          <tr><th scope="row">Backup</th><td>Encrypted copies on an internal drive and on a USB drive. You can restore a backup on different hardware.</td></tr>
+          <tr><th scope="row">Interfaces</th><td>The device operates without a screen. The main interface is a web interface on the local network. A text interface is available over SSH or on a connected screen.</td></tr>
         </tbody>
       </table>
     </section>
@@ -57,6 +65,16 @@
         <li>Do not forward a router port to the device.</li>
         <li>If you lose the passphrase and the recovery key, you cannot recover the data.</li>
       </ul>
+    </section>
+
+    <section aria-labelledby="support">
+      <h2 id="support">Support the project</h2>
+      <p>You can send bitcoin to support this project. The NullR Lightning node receives the payments.</p>
+      <table>
+        <tbody>
+          <tr><th scope="row">Lightning</th><td>nullr@lnzap.org</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <footer>MIT licence</footer>

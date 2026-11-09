@@ -3,8 +3,8 @@
   --text: #eef0f5;
   --text-soft: #b9c0ce;
   --line: rgb(255 255 255 / 0.1);
-  --accent: #f0b35a;
-  --accent-ink: #231703;
+  --accent: #ff7a1a;
+  --accent-ink: #1f1205;
   --glass: rgb(255 255 255 / 0.06);
   --glass-solid: #181f33;
   --gutter: clamp(16px, 4vw, 32px);
@@ -12,6 +12,21 @@
 }
 
 * { box-sizing: border-box; }
+
+figure { margin: 0; }
+
+figure img {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  height: auto;
+  margin: 0 auto;
+}
+
+figcaption {
+  margin-top: 16px;
+  color: var(--text-soft);
+}
 
 html { background: var(--night); }
 
