@@ -42,6 +42,8 @@ the drive is already encrypted, so a backup needs no key and runs while locked.
 | Decrypt and verify logs | When unlocked, monthly | The backup opens with the current keys |
 | Recovery kit test | Prompted every 6 months | The kit still opens the keyring |
 
+The results appear on the [Checks](checks.md) page.
+
 ## Second copy
 
 The web UI records when each backup drive was last seen, and prompts the owner if no

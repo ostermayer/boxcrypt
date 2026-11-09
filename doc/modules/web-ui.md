@@ -16,11 +16,13 @@ only.
 | `/` | Unlocked | Home |
 | `/items` | Unlocked | Passwords, notes and keys |
 | `/files` | Unlocked | Files of any size |
+| `/checks` | Unlocked | Software, drive, store and backup [checks](checks.md) |
 | `/backup` | Unlocked | Backup drives and recovery kit test |
 | `/apps` | Unlocked | Add-on apps |
 | `/settings` | Unlocked | Device name, passphrase, [safeguards](safeguards.md), updates, clock, device information, restart, shut down, factory reset |
 | `/help` | Unlocked | Task guides, glossary and the first-look tour |
 | `/ca.crt` | Public | Certificate for devices to trust |
+| `/attest` | Public | Signed proof of what booted, for `boxcrypt verify` |
 
 The address is `https://boxcrypt.local` until the owner changes the device name.
 
@@ -108,7 +110,8 @@ test fails if a setting has no help text.
 
 The box creates its own certificate authority at first run and issues a certificate
 for its name, within the 825-day limit iOS enforces. Renewal happens while
-unlocked, because the authority's key lives in the keyring.
+unlocked, because the authority's key lives in the keyring. On a box with a TPM, the private
+key of the certificate stays in the TPM. See [checks](checks.md).
 
 The first visit shows a browser warning. The owner compares the fingerprint with the
 one the installer showed, and the wizard then explains how to trust the certificate on

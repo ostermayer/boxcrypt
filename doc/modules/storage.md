@@ -64,6 +64,8 @@ A VM test damages a drive and proves the repair, for a mirror and for one drive.
 survives bad blocks but not a failed drive. ZFS cannot find an error that happens in memory
 before it makes the checksum, so ECC RAM is better when the computer supports it.
 
+The owner sees the result of each scrub on the [Checks](checks.md) page.
+
 ## Edge cases
 
 - **Drive failure while running:** your data keeps working from the other drives. If the

@@ -43,10 +43,15 @@ There is no bootable USB image yet, and nothing has run on real hardware.
 - [ ] Objects, signed logs and index
 - [ ] Secrets and files, with streaming for files larger than RAM
 - [ ] Stock `age` can recover everything, proven by a test
+- [ ] Deposit receipt: both sides hash the file, and the box reads it back after the write
+- [ ] Store check: each object against its hash, each log entry against its signature
 
 ### M4: A person can use it
 - [ ] First-run wizard with setup code
 - [ ] TPM-sealed check phrase on the unlock page, with a warning when boot has changed
+- [ ] [Checks](modules/checks.md) page in the web UI and the TUI: software, drives, store and backups, with **Check now**
+- [ ] `boxcrypt verify` from another computer, with `--restart` and `--backup`
+- [ ] TLS key held in the TPM, so a changed boot cannot serve the box's certificate
 - [ ] Web UI in the design language
 - [ ] Optional TUI over SSH and on a connected screen
 - [ ] Certificate install guide per device type
@@ -62,10 +67,10 @@ There is no bootable USB image yet, and nothing has run on real hardware.
 ### M6: 1.0
 - [ ] Signed offline updates and rollback
 - [ ] An interrupted update cannot leave two drives with different slots under one partition ID
-- [ ] Drive failure alerts, scrub results and guided replacement
+- [ ] Drive failure alerts and guided replacement
 - [ ] Check the system partitions and boot files on each drive, and rewrite damage from another drive
 - [ ] Reproducible rebuilds as a release gate, with signatures and a public log
-- [ ] `boxcrypt verify` from another computer
+- [ ] `boxcrypt verify` compares each box with the signed public list of releases
 - [ ] Secure Boot enrollment where the firmware allows it
 - [ ] **Independent security audit**
 
@@ -161,3 +166,5 @@ kernel, and how a mirror fits with one internal drive.
   GPL Linux kernel
 - Confirm licence obligations for every app shipped in the image, including source
   availability for AGPL-3.0 and GPL components.
+- Write a buyer's guide for premade boxes: what to check at first start, how to reinstall
+  from your own USB stick, and the firmware risk that a reinstall does not remove.

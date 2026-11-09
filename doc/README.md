@@ -24,6 +24,7 @@ operating system based on NixOS.
 | [Storage](modules/storage.md) | Mirrored drives | Built and tested |
 | [Installer](modules/installer.md) | Erases the drives and installs the system | Program built, USB image not built |
 | [Integrity](modules/integrity.md) | Proves that the system has no changes | Partly built |
+| [Checks](modules/checks.md) | Shows the owner that the software is genuine and the data is intact | Design |
 | [Core](modules/core.md) | Encrypted store and keys | Design |
 | [Two-factor login](modules/two-factor.md) | Security key or authenticator app for each login | Design |
 | [Safeguards](modules/safeguards.md) | Erase after wrong passphrases and other settings | Design |

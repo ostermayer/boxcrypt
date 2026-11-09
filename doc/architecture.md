@@ -61,6 +61,7 @@ is a tmpfs rebuilt at every boot, so only declared paths under `/persist` surviv
 | Network | `modules/network.nix` | LAN-only networking, firewall | [network](modules/network.md) |
 | Storage | `modules/presets/zfs.nix` | ZFS mirror, boot redundancy | [storage](modules/storage.md) |
 | Integrity | `modules/presets/appliance.nix` | Verified boot, proof for the owner | [integrity](modules/integrity.md) |
+| Checks | `src/boxcryptd/checks/` | Shows the owner that the software is genuine and the data is intact | [checks](modules/checks.md) |
 | Core | `src/boxcryptd/` | Encrypted store, keys, API | [core](modules/core.md) |
 | Web UI | `src/boxcryptd/web/` | The local web interface | [web-ui](modules/web-ui.md) |
 | TUI | `src/boxcryptd/tui/` | The text interface | [tui](modules/tui.md) |
@@ -117,7 +118,7 @@ installs it as a new system generation, keeping the old one for rollback.
 | Someone hosting a mirror | Ciphertext only | Mirrors never receive keys |
 | Recorded ciphertext, future quantum computer | Stays encrypted | Hybrid post-quantum keys |
 | Tampered backup or mirror | Detected | Hash-named objects, signed logs |
-| Malware rewrites the OS or firewall on disk | Fails to boot, or shows at next unlock | Verified boot, TPM check phrase |
+| Malware rewrites the OS or firewall on disk | Fails to boot, or the browser refuses it and the proof fails | Verified boot, TLS key held in the TPM, signed TPM quote |
 | Malicious or altered release | Refused, or exposed by a rebuild | Signatures, public log, reproducible builds |
 | Live kernel compromise | Could change the rules until reboot | No network privileges for exposed programs, router block |
 | Compromised box while locked | Could capture the next unlock | Small surface, read-only system |

@@ -39,4 +39,5 @@ internet.
 ## Licence
 
 GPL-3.0-or-later. See [LICENSE](LICENSE). If you distribute a changed version, you must
-publish its source.
+publish its source. You can sell computers with BoxCrypt installed. You must give each buyer
+the source and what they need to install a changed version.

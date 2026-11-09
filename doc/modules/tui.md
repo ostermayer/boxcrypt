@@ -13,6 +13,7 @@ a screen and use the web UI, so the TUI is optional.
   Neither gives a shell.
 - Talks to `boxcryptd` over a Unix socket, so it adds no network exposure.
 - Afterwards it shows status while locked, and accepts the passphrase to unlock.
+- Has a Checks screen with the same results and text as the web UI. See [checks](checks.md).
 - Works with a keyboard alone.
 - Each login needs a second factor. See [two-factor login](two-factor.md).
 - `?` opens the help note for the selected item, and the status line shows its one-line

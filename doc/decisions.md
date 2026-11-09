@@ -330,3 +330,43 @@ device with BoxCrypt to let its owner install a changed version.
 person who only runs a changed version as a service does not have to, and the AGPL would
 cover that case. Copies taken under MIT before this change stay under MIT. Add-on apps keep
 their own licences.
+
+## ADR-027: Anyone can sell a computer with BoxCrypt installed
+
+**Context.** Some people want a box that is ready to use, and will pay for one. A seller
+controls the hardware, the firmware and the first copy of the system. A buyer must trust the
+seller in a way that a person who installs BoxCrypt on their own computer does not.
+
+**Decision.** Anyone can sell a computer with BoxCrypt installed, with no fee and no
+permission from the project. The GPL sets the only rules: each buyer gets the source, and
+what they need to install a changed version. The project does not approve or check sellers.
+
+**Consequences.** A seller who locks a box and keeps the signing keys breaks the licence.
+The licence cannot set security rules, so a buyer's guide must say what to check. The box
+must start in first-time setup with no keys and no accounts. A buyer can erase it and install
+BoxCrypt from their own USB stick. That replaces the system but not the firmware, so
+BoxCrypt cannot detect a seller who changes the firmware. Until reproducible builds ship, a
+buyer cannot check a box against a public build. Each seller distributes ZFS and Linux in one
+image, so the ZFS licence question applies to each seller. The GPL does not cover the
+BoxCrypt name, and a policy for the name waits until the name is cleared.
+
+## ADR-028: The owner can check the software and the data at any time
+
+**Context.** An owner must be able to find out at any moment whether the box runs genuine
+BoxCrypt and whether the data is intact. A page that the box serves cannot prove this, because
+changed software can draw the same page. The check phrase from ADR-018 answers only at unlock,
+and anyone who has seen it can copy it. ZFS repairs damage, but the owner cannot see that.
+
+**Decision.** Add a [Checks](modules/checks.md) page to the web UI and the TUI, and label each
+result as a box report or as proven by the owner's computer. `boxcrypt verify` moves from M6
+to M4. The TPM signs the boot measurements with a fresh random number, with no login. The TLS
+key stays in the TPM and works only on a signed release, so a changed boot gets a certificate
+error. Drive, store and backup checks show the last run, the amount checked and the names of
+damaged files. Each deposit gets a receipt.
+
+**Consequences.** The proof shows what booted, not what is in memory. Only a restart and a new
+proof can rule out a live compromise, and a restart locks the box. Firmware makes the first
+measurements, so changed firmware remains a gap. A box without a TPM always shows "cannot be
+proven", and this includes Mac minis and a Raspberry Pi 5 with no TPM module. A TPM is still
+not required. A restore to new hardware creates new TPM keys. Uploads take longer because both
+sides hash the file.
