@@ -9,6 +9,7 @@
 | **EROFS** | A read-only Linux file system. BoxCrypt uses it for the system partition. |
 | **ESP** | EFI System Partition. It holds the files that the firmware starts. |
 | **FIDO2** | A standard for security keys, such as a YubiKey. Browsers use it through WebAuthn. |
+| **Inventory** | A list, signed by the box, of the encrypted files that the store must hold. |
 | **Keyring** | The encrypted file that holds the keys for the store. |
 | **MCP** | Model Context Protocol. A standard way to give an LLM tools. |
 | **mDNS** | Multicast DNS. It lets a device answer to a `.local` name on the local network. |

@@ -19,8 +19,9 @@ bootable USB image, or a network flash from another computer.
 5. Ask the owner to type `ERASE` to confirm.
 6. Partition, build the pool and install, as described in [storage](storage.md).
 7. With no cable connected, offer to join a Wi-Fi network.
-8. Show a one-time setup code and the certificate fingerprint. The owner writes them down,
-   because the device may never have a screen again.
+8. Show a one-time setup code, the setup certificate fingerprint and the fingerprint of the
+   TPM proof key, which the installer creates. The owner writes them down, because the device
+   may never have a screen again.
 9. Ask the owner to remove the stick and restart.
 
 ## Network flash
@@ -44,8 +45,9 @@ does not need internet access. See ADR-024.
    be erased, because the installer and the image are in RAM.
 7. The same install program runs, with the same plan and drive rules. The plan shows drive
    serial numbers, so that you can check this is the right computer.
-8. Your terminal shows the setup code and the certificate fingerprint. Confirm that you
-   wrote them down, then type `ERASE`.
+8. Your terminal shows the setup code and the setup certificate fingerprint. Confirm that you
+   wrote them down, then type `ERASE`. It shows the fingerprint of the TPM proof key after the
+   install, because the install creates that key.
 9. The install does not stop if the connection drops. The installer stays reachable until
    you confirm the result. It also removes old firmware boot entries.
 

@@ -1,8 +1,8 @@
 # Integrity
 
 > **Status: partly built.** See ADR-018 and ADR-028. The read-only OS, block verification and module
-> locking are built and VM-tested. Authenticating the boot files, the TPM check phrase
-> and `boxcrypt verify` are not built. Until they are, an attacker who can write to the
+> locking are built and VM-tested. Authenticating the boot files and `boxcrypt verify`
+> are not built. Until they are, an attacker who can write to the
 > boot partition can replace the kernel and nothing will report it.
 
 ## Purpose
@@ -22,7 +22,7 @@ reach from the source code to the running machine.
 | Firmware to kernel | The kernel is unmodified | Secure Boot where available, TPM measurement always |
 | Kernel to system | Every block of the OS is unmodified | dm-verity, with its root hash inside the kernel image |
 | Disk to policy | Nothing writable can widen the network rules | Rules live only in the verified image |
-| Machine to owner | The owner can see all of this held | Check phrase and independent verification |
+| Machine to owner | The owner can see all of this held | `boxcrypt verify` from the owner's computer |
 
 ## Network policy
 
@@ -38,18 +38,14 @@ ports for catalog apps. None of them can open a path to the internet.
 The owner can check the box at any time. [Checks](checks.md) has the full design.
 
 **Verify from another computer.** `boxcrypt verify <address>` asks the TPM for a signed
-quote over a fresh random number and compares it with the value published for that
-release. Every box running a release should report the same measurement, which is why
-one image must fit every machine (ADR-004).
+quote over a fresh random number and compares it with the values published for that
+release. Every box running a release should report the same PCR 11 value, which is why
+one image must fit every machine (ADR-004). Firmware measurements differ on each machine,
+so they are compared with the values from enrollment.
 
-**Every visit.** The private key of the TLS certificate stays in the TPM and works only on
-a genuine boot, so a changed boot gets a certificate error in the browser.
-
-**Check phrase.** During setup the owner picks a phrase, which is sealed in the TPM to
-the boot measurements. The unlock page shows it before asking for the passphrase. If
-the boot chain has changed, the TPM refuses to release it and the page shows a warning
-instead. Access to the sealed phrase is closed once boot finishes. The phrase is a quick
-sign and not proof, because anyone who has seen it can copy it.
+**Browser warning.** The private key of the TLS certificate is sealed to the TPM, so a
+changed boot chain or a stolen drive cannot use it, and the browser shows a warning or a
+connection failure. This does not cover malware that reached the box while it was unlocked.
 
 ## Reducing what malware can do
 
@@ -68,8 +64,8 @@ sign and not proof, because anyone who has seen it can copy it.
 - **Live kernel compromise.** Cryptography proves what booted, not what is happening in
   memory. An attacker with kernel-level code execution could change the rules until the
   next reboot, and the box could not reliably report it. The router block is the
-  independent backstop, because nothing on the box can change it. `boxcrypt verify --restart`
-  proves a fresh boot.
+  independent backstop, because nothing on the box can change it. The restart check in
+  `boxcrypt verify` shows that a genuine release booted again.
 - **No TPM.** A TPM is not required, but without one the box cannot prove its state. The
   installer explains this and asks the owner to accept it, and the status page keeps
   saying so.

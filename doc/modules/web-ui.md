@@ -23,6 +23,7 @@ only.
 | `/help` | Unlocked | Task guides, glossary and the first-look tour |
 | `/ca.crt` | Public | Certificate for devices to trust |
 | `/attest` | Public | Signed proof of what booted, for `boxcrypt verify` |
+| `/repair` | Passphrase and code, or recovery key | Used by `boxcrypt verify` when the box cannot open its TLS key |
 
 The address is `https://boxcrypt.local` until the owner changes the device name.
 
@@ -45,7 +46,8 @@ screen asks for one thing.
 6. **Second factor.** Enroll a YubiKey or an authenticator app, and use it once. This step
    is required. See [two-factor login](two-factor.md).
 7. **Backup drive.** Set one up now, or skip and receive a reminder.
-8. **Finished.** "You are all set, Name."
+8. **Finished.** "You are all set, Name." The page asks the owner to install `boxcrypt verify`
+   from boxcrypt.org and run it on their computer. See [checks](checks.md).
 
 After setup:
 
@@ -108,14 +110,16 @@ test fails if a setting has no help text.
 
 ## Certificates
 
-The box creates its own certificate authority at first run and issues a certificate
-for its name, within the 825-day limit iOS enforces. Renewal happens while
-unlocked, because the authority's key lives in the keyring. On a box with a TPM, the private
-key of the certificate stays in the TPM. See [checks](checks.md).
+The installer makes a temporary setup certificate and shows its fingerprint. The first visit
+shows a browser warning, and the owner compares the fingerprint with the one the installer
+showed. The wizard then creates the certificate authority, issues the final certificate for
+the box's name, and explains how to trust it on each device.
 
-The first visit shows a browser warning. The owner compares the fingerprint with the
-one the installer showed, and the wizard then explains how to trust the certificate on
-each device.
+Each certificate stays within the 825-day limit iOS enforces. The authority's key lives in
+the keyring, so the box issues certificates only while unlocked. At each unlock it issues a
+series for the same key that covers the next ten years, and it moves to the next one by
+itself. On a box with a TPM, the private key is sealed to the TPM. [Checks](checks.md)
+describes the browser warning and the repair.
 
 ## Edge cases
 

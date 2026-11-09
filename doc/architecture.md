@@ -76,7 +76,7 @@ Paths under `src/boxcryptd/` and `modules/apps/` are planned and do not exist ye
 
 ## Data flow
 
-**First run.** The installer shows a setup code and a certificate fingerprint. After that
+**First run.** The installer shows a setup code, a setup certificate fingerprint and the fingerprint of the TPM proof key. After that
 the device runs without a screen. The owner opens `https://boxcrypt.local`, enters the code and chooses a passphrase.
 The wizard creates the keys, proves the recovery kit works and sets up a backup
 drive.
@@ -104,7 +104,8 @@ installs it as a new system generation, keeping the old one for rollback.
 | Names, tags and history | Encrypted, needs the passphrase or recovery key |
 | Keyring | Encrypted, needs the passphrase or recovery key |
 | Number, sizes and dates of objects | Visible |
-| TLS server key, network settings and any Wi-Fi password | Visible, because the unlock page must work while locked |
+| Network settings and any Wi-Fi password | Visible, because the box must reach the LAN while locked |
+| TLS server key | Sealed to the TPM. Visible on a box with no TPM |
 
 ## Threat model
 
@@ -118,7 +119,7 @@ installs it as a new system generation, keeping the old one for rollback.
 | Someone hosting a mirror | Ciphertext only | Mirrors never receive keys |
 | Recorded ciphertext, future quantum computer | Stays encrypted | Hybrid post-quantum keys |
 | Tampered backup or mirror | Detected | Hash-named objects, signed logs |
-| Malware rewrites the OS or firewall on disk | Fails to boot, or the browser refuses it and the proof fails | Verified boot, TLS key held in the TPM, signed TPM quote |
+| Malware rewrites the OS or firewall on disk | Fails to boot, or the browser warns and the proof fails | Verified boot, TLS key sealed to the TPM, signed TPM quote |
 | Malicious or altered release | Refused, or exposed by a rebuild | Signatures, public log, reproducible builds |
 | Live kernel compromise | Could change the rules until reboot | No network privileges for exposed programs, router block |
 | Compromised box while locked | Could capture the next unlock | Small surface, read-only system |

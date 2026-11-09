@@ -44,14 +44,16 @@ There is no bootable USB image yet, and nothing has run on real hardware.
 - [ ] Secrets and files, with streaming for files larger than RAM
 - [ ] Stock `age` can recover everything, proven by a test
 - [ ] Deposit receipt: both sides hash the file, and the box reads it back after the write
-- [ ] Store check: each object against its hash, each log entry against its signature
+- [ ] Store check against a signed inventory: each object against its hash, each log entry against its signature
 
 ### M4: A person can use it
 - [ ] First-run wizard with setup code
-- [ ] TPM-sealed check phrase on the unlock page, with a warning when boot has changed
 - [ ] [Checks](modules/checks.md) page in the web UI and the TUI: software, drives, store and backups, with **Check now**
-- [ ] `boxcrypt verify` from another computer, with `--restart` and `--backup`
-- [ ] TLS key held in the TPM, so a changed boot cannot serve the box's certificate
+- [ ] `boxcrypt verify` from another computer: enrollment, the restart check, USB backups and the repair, with one command to remember
+- [ ] Signed list of the measurements of each release
+- [ ] TLS key sealed to a policy for this machine's boot chain, with ten years of certificates for that key
+- [ ] The image turns off suspend, and credentials, add-ons and extensions from the boot partition
+- [ ] An overdue scrub starts soon after boot
 - [ ] Web UI in the design language
 - [ ] Optional TUI over SSH and on a connected screen
 - [ ] Certificate install guide per device type
@@ -70,7 +72,6 @@ There is no bootable USB image yet, and nothing has run on real hardware.
 - [ ] Drive failure alerts and guided replacement
 - [ ] Check the system partitions and boot files on each drive, and rewrite damage from another drive
 - [ ] Reproducible rebuilds as a release gate, with signatures and a public log
-- [ ] `boxcrypt verify` compares each box with the signed public list of releases
 - [ ] Secure Boot enrollment where the firmware allows it
 - [ ] **Independent security audit**
 
@@ -140,10 +141,11 @@ kernel, and how a mirror fits with one internal drive.
 - No secure element or tamper detection
 - A live kernel compromise cannot be ruled out by the box itself
 - Machines without a TPM cannot prove their state
+- The independent software proof needs a terminal until a double-click version follows 1.0
 - One owner until tenants arrive
 - x86-64 UEFI only until the other hardware families are built
 - Choosing Wi-Fi adds radio exposure and stores the network password unencrypted
-- Rollback of the whole disk to an older state cannot be detected by one box alone
+- Rollback to an older signed state, of the whole disk or of recent changes, cannot be detected by one box alone
 - Deleted data cannot be guaranteed erased from SSDs, backups or mirrors
 - Erase after wrong passphrases stops guessing at the box, not guessing against copied drives
 

@@ -56,8 +56,11 @@ Each box appends to its own chain:
 ```
 
 The body, encrypted to the metadata key, records an item ID, an operation, a time, a
-name, tags and the object hash. Unlocking replays all logs into an in-memory index
-and verifies every signature and chain.
+name, tags, the object hash and the content hash. Unlocking replays all logs into an
+in-memory index and verifies every signature and chain.
+
+The box also keeps a signed inventory of what the store must hold, so that a missing object
+can be found while the box is locked. See [checks](checks.md).
 
 An object is only trusted once a signed entry refers to it, because anyone holding
 a public key can create one.

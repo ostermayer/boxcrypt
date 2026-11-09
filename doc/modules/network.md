@@ -27,7 +27,7 @@ Enabling an add-on app adds its port to the inbound rule, and disabling it remov
 port.
 
 The box takes its address by DHCP. Owners reach it by name, so the address can change
-without any effect. A restored box keeps its name and certificate.
+without any effect. A restored box keeps its name and certificate authority.
 
 ## Wi-Fi
 

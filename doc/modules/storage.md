@@ -43,7 +43,8 @@ firmware entries. Each update writes to every drive.
 ## Maintenance
 
 - A scrub runs each month and one hour after each start. A box that you keep switched off
-  can miss a calendar date, so each start also runs one.
+  can miss a calendar date, so each start also runs one. A scrub continues after a restart
+  from its last checkpoint, which ZFS writes about every two hours.
 - ZFS events appear on the status page as "Drive 2 needs replacing".
 - Replacement is guided from the web UI.
 
