@@ -46,12 +46,11 @@
   <g text-anchor="middle" fill="#eef0f5" font-size="18" font-weight="650">
     <text x="100" y="318">Drive 1</text>
     <text x="268" y="318">Drive 2</text>
-    <text x="438" y="318">Internal backup</text>
+    <text x="438" y="331">Internal backup</text>
   </g>
   <g text-anchor="middle" fill="#b9c0ce" font-size="14">
     <text x="100" y="346">Encrypted data</text>
     <text x="268" y="346">Mirror of drive 1</text>
-    <text x="438" y="346">Older copies</text>
   </g>
 
   <line x1="135" y1="396" x2="135" y2="428" stroke="#9aa4b8" stroke-width="2" marker-end="url(#arrow)"/>
@@ -62,8 +61,7 @@
   </g>
 
   <rect x="10" y="432" width="250" height="80" rx="14" fill="#232b42" stroke="#3d4763"/>
-  <text x="135" y="465" text-anchor="middle" fill="#eef0f5" font-size="20" font-weight="650">USB backup</text>
-  <text x="135" y="492" text-anchor="middle" fill="#b9c0ce" font-size="15">Keep it in another place</text>
+  <text x="135" y="479" text-anchor="middle" fill="#eef0f5" font-size="20" font-weight="650">USB backup</text>
 
   <rect x="280" y="432" width="250" height="80" rx="14" fill="#2e1f24" stroke="#ff6b5e"/>
   <text x="405" y="465" text-anchor="middle" fill="#eef0f5" font-size="20" font-weight="650">Internet</text>
