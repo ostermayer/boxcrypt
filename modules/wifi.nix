@@ -6,7 +6,7 @@ let
   iwdState = "${networkState}/iwd";
 
   # Every modern Wi-Fi driver depends on cfg80211, so this one gate covers them all.
-  driverGate = pkgs.writeShellScript "cryptbox-wifi-gate" ''
+  driverGate = pkgs.writeShellScript "boxcrypt-wifi-gate" ''
     [ -e ${enabledMarker} ] || exit 1
     exec ${pkgs.kmod}/bin/modprobe --ignore-install cfg80211 "$@"
   '';
@@ -25,6 +25,10 @@ in
 
   systemd.services.iwd = {
     unitConfig.ConditionPathExists = enabledMarker;
+
+    # The radio must never come up without the firewall.
+    requires = [ "nftables.service" ];
+    after = [ "nftables.service" ];
 
     # The box must join the network before it can show the unlock page, so network
     # passwords live here rather than in the encrypted store.

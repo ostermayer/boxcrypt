@@ -37,10 +37,11 @@ LAN port, a loopback port and its data paths.
 
 - **Install:** the app already ships inside the image, stopped. Installing is one click
   and needs no internet.
-- **Running:** `cryptboxd` terminates TLS on the app's LAN port and proxies to its
+- **Running:** `boxcryptd` terminates TLS on the app's LAN port and proxies to its
   loopback port. Disabling the app closes the port.
 - **Isolation:** each app has a sandboxed service and its own dataset, cannot read the
-  store and cannot reach anything outside the box.
+  store and cannot reach anything outside the box. Each app gets its own network namespace
+  or a Unix socket, because a shared loopback would let apps reach each other directly.
 - **LAN only:** apps follow the same firewall rules as the box, so they work only from
   the owner's local network.
 - **Accounts:** each app has its own login. Locking the box does not stop an app.

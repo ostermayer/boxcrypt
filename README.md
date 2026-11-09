@@ -1,45 +1,42 @@
-# cryptbox
+# BoxCrypt
 
-A purpose-built operating system for keeping secrets safe over the long term. Flash
-it onto an ordinary PC and that PC does one thing: hold your passwords, keys and
-files, encrypted, on your local network, with no route to the internet.
+BoxCrypt is a computer safe deposit box. Drop files onto the box and they cannot leave.
+You open them with your passphrase, from a device on your local network. BoxCrypt is an
+operating system based on NixOS. It runs on a standard computer and has no route to the
+internet.
 
-> **Status: early development.** Nothing is installable yet, and the software has
-> not been audited. See [the roadmap](doc/roadmap.md).
+> **Status:** Early development. You cannot install it yet. It has no independent security
+> audit. See the [roadmap](doc/roadmap.md).
 
-## What you get
+## Design
 
-- A web interface served only on your local network, and a text interface on the
-  box itself
-- Passwords, notes, keys and files of any size in one encrypted store
-- Locked whenever you are not using it, and after every reboot
-- Mirrored drives by default when you have more than one
-- Automatic backups that restore onto a new box
-- Your data in the open [age](https://age-encryption.org) format, so it can outlive
-  this project
-- Optional add-on apps, such as Vaultwarden, for people who prefer an existing
-  password manager
+- A web interface on your local network, and a text interface on the device
+- One encrypted store for passwords, notes, keys and files of any size
+- The device locks when you are not using it, and after each restart
+- Mirrored drives when the computer has more than one drive
+- Automatic backups on an internal drive and on a USB drive
+- Restore to a new computer from a backup
+- A required second factor for each login: a YubiKey or an authenticator app
+- An optional erase after a number of wrong passphrases
+- Data in the standard [age](https://age-encryption.org) format
+- Optional add-on apps, such as Vaultwarden
 
-## What it isn't
+## Limits
 
-- A general home server. Add-on apps are limited to keeping secrets.
-- A hardware security module. An ordinary PC has no secure element or tamper
-  detection.
+- BoxCrypt is not a general home server. Add-on apps must keep secrets.
+- A standard computer has no secure element and no tamper detection.
 
 ## Repository
 
 | Path | Contents |
 |---|---|
 | `modules/` | NixOS modules that define the system |
-| `modules/apps/` | Add-on apps |
 | `pkgs/` | Nix packages |
-| `src/` | `cryptboxd`, the core |
-| `tests/` | Unit tests and VM tests |
-| `doc/` | Architecture, decisions, roadmap and setup |
+| `src/` | Source code |
+| `tests/` | Virtual machine tests |
+| `doc/` | Documentation. Start at the [index](doc/README.md). |
 
-## Documentation
+## Licence
 
-- [Architecture](doc/architecture.md)
-- [Setup](doc/setup.md)
-- [Decisions](doc/decisions.md)
-- [Roadmap](doc/roadmap.md)
+GPL-3.0-or-later. See [LICENSE](LICENSE). If you distribute a changed version, you must
+publish its source.

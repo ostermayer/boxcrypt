@@ -1,7 +1,7 @@
 # System
 
-> **Status: hardening is built and VM-tested.** The tmpfs root builds but has not
-> booted yet, and updates are still to come.
+> **Status: hardening is built and VM-tested.** The tmpfs root boots in VM tests. Real
+> hardware and updates are still to come.
 
 ## Purpose
 
@@ -18,7 +18,8 @@ profile, so these settings are our own.
 - Kernel settings restrict pointers, logs, ptrace, BPF, kexec and SysRq.
 - Modules for unused network protocols, Bluetooth and FireWire are blocked, and Wi-Fi
   drivers are blocked until the owner chooses Wi-Fi.
-- Services run sandboxed under systemd.
+- `boxcryptd` and add-on apps will run sandboxed under systemd. `systemd-networkd` and
+  `iwd` keep the privileges they need.
 
 ## Updates
 
@@ -31,4 +32,5 @@ inactive system slot on every drive. The previous slot stays available for rollb
 - **Update fails to boot:** the box returns to the previous slot.
 - **Upload is corrupt or unsigned:** rejected before anything changes.
 - **Clock is wrong:** there is no internet time. The web UI compares the box's clock
-  with the browser's and offers to correct it.
+  with the browser's and offers to correct it. A wrong clock stops authenticator codes. See
+  [two-factor login](two-factor.md).

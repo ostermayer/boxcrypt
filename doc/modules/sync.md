@@ -18,6 +18,6 @@ a building or a location.
 
 ## Open questions
 
-- The transport between boxes, given that cryptbox has no route out by default.
+- The transport between boxes, given that BoxCrypt has no route out by default.
 - How a host enforces quotas on a tenant it cannot read.
 - Peer health reporting, and what counts as a safe copy.

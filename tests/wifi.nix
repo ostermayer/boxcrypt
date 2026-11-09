@@ -4,7 +4,7 @@ let
   inherit (import ./lib.nix) webServer;
 in
 {
-  name = "cryptbox-wifi";
+  name = "boxcrypt-wifi";
 
   nodes.box =
     { pkgs, ... }:
@@ -21,7 +21,7 @@ in
       environment.etc."hostapd-test.conf".text = ''
         interface=wlan0
         driver=nl80211
-        ssid=cryptbox-test
+        ssid=boxcrypt-test
         hw_mode=g
         channel=1
         wpa=2
@@ -33,6 +33,14 @@ in
       # Stand-ins for real services: one allowed port, one that must stay closed.
       systemd.services.allowed = webServer pkgs 443;
       systemd.services.closed = webServer pkgs 8080;
+
+      # Something on the Wi-Fi network for the box to try, and fail, to reach.
+      systemd.services.ap-web = (webServer pkgs 80) // {
+        wantedBy = [ ];
+        serviceConfig = (webServer pkgs 80).serviceConfig // {
+          NetworkNamespacePath = "/run/netns/ap";
+        };
+      };
     };
 
   testScript = ''
@@ -77,7 +85,7 @@ in
         box.succeed(f"{AP} ip link set wlan0 up")
         box.succeed(f"{AP} hostapd -B /etc/hostapd-test.conf")
         box.succeed(f"{AP} dnsmasq {DNSMASQ_OPTIONS}")
-        box.succeed("printf '[Security]\\nPassphrase=test-passphrase\\n' > /persist/network/iwd/cryptbox-test.psk")
+        box.succeed("printf '[Security]\\nPassphrase=test-passphrase\\n' > /persist/network/iwd/boxcrypt-test.psk")
         box.succeed("systemctl start iwd.service")
         box.wait_until_succeeds("ip -4 -o addr show | grep -q 'inet 192.168.50.1[0-2]'", timeout=60)
         address = box.succeed("ip -4 -o addr show | awk '/192.168.50/ {print $4}' | cut -d/ -f1").strip()
@@ -89,8 +97,29 @@ in
         box.succeed(f"{AP} curl -sf {TIMEOUT} http://{address}:443/")
         box.fail(f"{AP} curl -sf {TIMEOUT} http://{address}:8080/")
 
-    with subtest("the firewall is what blocked that"):
+    with subtest("cannot start a connection over Wi-Fi, even when handed a route"):
+        box.succeed("systemctl start ap-web.service")
+        box.wait_until_succeeds(f"{AP} curl -sf {TIMEOUT} http://127.0.0.1/")
+        box.succeed("ip route add default via 192.168.50.1")
+        box.fail(f"curl -sf {TIMEOUT} http://192.168.50.1/")
+
+    with subtest("the firewall is what blocked those"):
         box.succeed("nft flush ruleset")
         box.succeed(f"{AP} curl -sf {TIMEOUT} http://{address}:8080/")
+        box.succeed(f"curl -sf {TIMEOUT} http://192.168.50.1/")
+
+    with subtest("the radio cannot start without the firewall"):
+        for dependency in ["Requires", "After"]:
+            assert "nftables.service" in box.succeed(f"systemctl show -p {dependency} iwd.service")
+        box.succeed("systemctl stop iwd.service")
+        # The step above flushed the rules, so stopping the firewall can report a failure.
+        box.execute("systemctl stop nftables.service")
+        box.succeed(
+            "mkdir -p /run/systemd/system/nftables.service.d",
+            "printf '[Service]\\nExecStart=\\nExecStart=/run/current-system/sw/bin/false\\n' > /run/systemd/system/nftables.service.d/broken.conf",
+            "systemctl daemon-reload",
+        )
+        box.fail("systemctl start iwd.service")
+        box.fail("systemctl is-active iwd.service")
   '';
 }

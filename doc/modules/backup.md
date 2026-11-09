@@ -15,8 +15,15 @@ both the passphrase and the kit loses the data.
 
 ## Backup
 
-A backup drive holds the same layout as the store. Backups run after changes and at
-least daily, whenever a drive labelled `CRYPTBOX-BAK` is attached.
+BoxCrypt keeps two kinds of backup. Both have the same layout as the store.
+
+| Backup | Protects against | Does not protect against |
+|---|---|---|
+| Internal, on the `bcpool/backup` dataset | Deleted items, mistakes and damaged data | Theft, fire and loss of all drives |
+| USB drive labelled `BOXCRYPT-BAK` | Loss of the whole device, if you keep the drive in another place | Changes made after the last copy |
+
+The internal backup runs after changes and at least daily. It needs no action from the
+owner. The USB backup runs at the same times, when the drive is attached.
 
 1. Copy every object the drive lacks, under a temporary name, then rename it.
 2. Copy new log entries and the wrapped keyrings.
@@ -37,18 +44,23 @@ the drive is already encrypted, so a backup needs no key and runs while locked.
 
 ## Second copy
 
-The console records when each backup drive was last seen, and prompts the owner if no
+The web UI records when each backup drive was last seen, and prompts the owner if no
 second drive has appeared for 30 days.
 
 ## Restore
 
 Offered on the first screen of a fresh install, behind the setup code. It copies the
-store back, checks every object against its hash and asks for the passphrase. Logs and
+store back, checks every object against its hash and asks for the passphrase, or for the
+recovery key if the box had TPM protection. Logs and
 keyring come back first, so secrets are usable before large files finish copying. The
 box resumes with the same address and certificate.
 
 ## Edge cases
 
+- **Damaged object on the backup drive:** the monthly check finds it by its hash. The next
+  backup copies that object again from the store.
+- **Erase after wrong passphrases:** the internal backup is erased with the store. USB
+  backups are not. See [safeguards](safeguards.md).
 - **Backup drive too small:** the box says so and shows the size needed.
 - **Drive removed mid-copy:** temporary files are ignored, and the next run resumes.
 - **New drive:** formatting requires explicit confirmation showing its model and size.

@@ -4,7 +4,7 @@
 
 ## Purpose
 
-`cryptboxd` holds every secret and file in one encrypted store, and is the only
+`boxcryptd` holds every secret and file in one encrypted store, and is the only
 program that can open it.
 
 ## Keys
@@ -20,7 +20,8 @@ program that can open it.
 
 The keyring is stored twice: `keyring.pass.age` uses age's passphrase mode, and
 `keyring.recovery.age` is encrypted to the recovery key. Changing the passphrase
-rewrites only the first.
+rewrites only the first. A box with TPM protection has no first file. See
+[safeguards](safeguards.md).
 
 The scrypt work factor is tuned at setup to take a few seconds, and kept within what
 stock `age` accepts.
@@ -63,13 +64,15 @@ a public key can create one.
 
 ## Locking
 
-Keys and the index exist only in `cryptboxd`'s memory, which is locked against
-swapping and excluded from core dumps. The box locks after 15 minutes of inactivity,
+Keys and the index exist only in `boxcryptd`'s memory, which is locked against
+swapping and excluded from core dumps. The box locks after 15 minutes of inactivity by default,
 on logout, on reboot, or on request. A running transfer holds it open until it ends.
 
 ## Edge cases
 
 - **Forgotten passphrase:** the recovery key opens the keyring and sets a new one.
+- **Wrong passphrases:** the owner can set the box to erase itself. See
+  [safeguards](safeguards.md).
 - **Power loss while saving:** temporary files are discarded. A log entry is only
   written once its object is durable.
 - **Disk full:** the save is refused and nothing changes.

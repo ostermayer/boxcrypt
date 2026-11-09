@@ -13,7 +13,7 @@
     {
       nixosModules.default = ./modules;
 
-      nixosConfigurations.cryptbox = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.boxcrypt = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           self.nixosModules.default
@@ -21,10 +21,13 @@
         ];
       };
 
+      packages.${system}.image = self.nixosConfigurations.boxcrypt.config.system.build.image;
+
       checks.${system} = {
-        appliance = self.nixosConfigurations.cryptbox.config.system.build.toplevel;
+        install = runTest ./tests/install.nix;
         network = runTest ./tests/network.nix;
         security = runTest ./tests/security.nix;
+        verified-boot = runTest ./tests/verified-boot.nix;
         wifi = runTest ./tests/wifi.nix;
       };
     };
