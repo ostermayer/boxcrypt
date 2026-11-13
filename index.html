@@ -36,7 +36,7 @@
         <tbody>
           <tr><th scope="row">API keys</th><td>Keep the keys for your servers, payment accounts and AI services. An AI agent can add a key. It cannot read a key unless you approve the request.</td></tr>
           <tr><th scope="row">Family documents</th><td>Scan passports, birth certificates, wills, deeds and insurance papers. Drop the files onto the box. There is no file size limit.</td></tr>
-          <tr><th scope="row">Password manager backups</th><td>Export your Bitwarden, 1Password or KeePass vault to a file and drop it onto the box. Many exports are not encrypted. On the box, the file is encrypted.</td></tr>
+          <tr><th scope="row">Password manager backups</th><td>Export your Bitwarden, 1Password or KeePass vault to a file and drop it onto the box. On the box, the file is encrypted and cannot be decrypted without your permission.</td></tr>
         </tbody>
       </table>
     </section>
@@ -55,11 +55,11 @@
         <tbody>
           <tr><th scope="row">Base system</th><td>NixOS 26.05</td></tr>
           <tr><th scope="row">Hardware</th><td>x86-64 or ARM64 computer with UEFI and 4 GB of RAM or more</td></tr>
-          <tr><th scope="row">TPM</th><td>TPM 2.0 is recommended. Without a TPM, the device cannot prove that its system has no changes.</td></tr>
+          <tr><th scope="row">TPM</th><td>TPM 2.0 is recommended. Without a TPM, the device cannot prove that its system has not changed.</td></tr>
           <tr><th scope="row">Network</th><td>Ethernet or Wi-Fi. The device name is boxcrypt.local. The device accepts connections from private addresses only. It ignores the DHCP gateway.</td></tr>
           <tr><th scope="row">System</th><td>Read-only. dm-verity checks each block when the device reads it.</td></tr>
           <tr><th scope="row">Storage</th><td>ZFS mirror across all NVMe and SATA drives</td></tr>
-          <tr><th scope="row">Encryption</th><td>Each secret is one age file with hybrid post-quantum keys. Standard age tools can decrypt the data.</td></tr>
+          <tr><th scope="row">Encryption</th><td>Each secret is one file in <a href="https://age-encryption.org">age</a>, an open and widely used encryption format, with hybrid post-quantum keys. If BoxCrypt goes away, any age tool can still open your files with your key.</td></tr>
           <tr><th scope="row">Keys</th><td>Keys stay in RAM while the device is unlocked. A restart locks the device.</td></tr>
           <tr><th scope="row">Files</th><td>No size limit. Available disk space is the only limit.</td></tr>
           <tr><th scope="row">Backup</th><td>Encrypted copies on an internal drive and on a USB drive. You can restore a backup on different hardware.</td></tr>
